@@ -10,8 +10,25 @@ int main()
     Platform platform(&window,150.0f, 20.0f, 0.1f);
     platform.setPosition(window.getSize().x / 2.0f, window.getSize().y);
 
+    std::vector<Block> blocks;
+    float blockWidth = 60.0f;
+    float blockHeight = 20.0f;
+    int numBlocksX = 10;
+    int numBlocksY = 4;
+
+    for (int y = 0; y < numBlocksY; y++)
+    {
+        for (int x = 0; x < numBlocksX; x++)
+        {
+            float posX = x * (blockWidth + 10.0f) + 30.0f;
+            float posY = y * (blockHeight + 10.0f) + 30.0f;
+            blocks.emplace_back(posX, posY, blockWidth, blockHeight);
+        }
+    }
+
+
     //Utwórz pi³kê 
-    Ball ball(10.0f, 0.1f,&window,&platform);
+    Ball ball(10.0f, 0.16f,&window,&platform,&blocks);
     ball.setPosition(window.getSize().x / 2.0f, window.getSize().y - platform.getHeight() * 1.5f - ball.getRadius());
 
     // G³ówna pêtla gry
@@ -44,6 +61,10 @@ int main()
         // Narysuj platformê
         platform.draw();
         ball.draw();
+        for (auto& block : blocks)
+        {
+            block.draw(window);
+        }
 
         // Zakoñcz rysowanie
         window.display();

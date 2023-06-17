@@ -4,12 +4,13 @@
 #include <random>
 
 
-Ball::Ball(float radius, float speed, sf::RenderWindow* window, Platform* platform)
+Ball::Ball(float radius, float speed, sf::RenderWindow* window, Platform* platform, std::vector<Block>* blocks)
 {
     this->radius = radius;
     this->speed = speed;
     this->window = window;
     this->platform = platform;
+    this->blocks = blocks;
 
     shape.setRadius(radius);
     shape.setFillColor(sf::Color::White);
@@ -25,6 +26,7 @@ void Ball::update()
     shape.move(velocity);
     checkCollisionWithWindow();
     checkCollisionWithPlatform();
+    checkCollisionWithBlocks();
 }
 
 void Ball::draw()
@@ -62,6 +64,21 @@ void Ball::checkCollisionWithPlatform()
     {
         velocity.y = -velocity.y;
     }
+}
+
+void Ball::checkCollisionWithBlocks()
+{
+    for (auto& block : *blocks)
+    {
+        if (!block.getDestoryed() && shape.getGlobalBounds().intersects(block.getBounds()))
+        {
+            velocity.y = -velocity.y;
+            block.setDestroyed(true);
+        }
+    }
+    blocks->erase(std::remove_if(blocks->begin(), blocks->end(), [](const Block& block) {
+        return block.getDestoryed();
+        }), blocks->end());
 }
 
 float Ball::getRadius() const
