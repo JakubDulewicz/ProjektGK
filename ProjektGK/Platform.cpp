@@ -1,5 +1,5 @@
 #include "SFML/Graphics.hpp"
-#include "Platform.h";
+#include "Platform.h"
 //Platform::Platform(){}
 Platform::Platform(sf::RenderWindow* window, float width, float height, float speed)
 {
@@ -49,4 +49,9 @@ float Platform::getWidth()
 float Platform::getSpeed()
 {
 	return speed;
+}
+
+sf::RectangleShape Platform::getShape()
+{
+	return shape;
 }

@@ -1,4 +1,4 @@
-#include "SFML/Graphics.hpp";
+#include "SFML/Graphics.hpp"
 #include "Platform.h"
 #include "Ball.h"
 int main()
@@ -11,8 +11,8 @@ int main()
     platform.setPosition(window.getSize().x / 2.0f, window.getSize().y);
 
     //Utwórz pi³kê 
-    Ball ball(&window,10.0f, 0.1f);
-    ball.setPosition(window.getSize().x / 2.0f, window.getSize().y - platform.getHeight() - ball.getRadius());
+    Ball ball(10.0f, 0.1f,&window,&platform);
+    ball.setPosition(window.getSize().x / 2.0f, window.getSize().y - platform.getHeight() * 1.5f - ball.getRadius());
 
     // G³ówna pêtla gry
     while (window.isOpen())

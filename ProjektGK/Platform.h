@@ -15,6 +15,8 @@ public:
 	float getHeight();
 	float getWidth();
 	float getSpeed();
+	sf::RectangleShape getShape();
+
 
 private:
 	sf::RectangleShape shape;

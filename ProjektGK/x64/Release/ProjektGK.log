@@ -1,14 +1,13 @@
-﻿  Ball.cpp
-  Main.cpp
-D:\Informatyka_przemysłowa_sem.6\GK\Projekt\ProjektGK\ProjektGK\Main.cpp(1,10): warning C4067: nieoczekiwane tokeny występujące po dyrektywie preprocesora - oczekiwano nowego wiersza
+﻿  Main.cpp
+D:\Informatyka_przemysłowa_sem.6\GK\Projekt\ProjektGK\ProjektGK\Ball.h(3,10): warning C4067: nieoczekiwane tokeny występujące po dyrektywie preprocesora - oczekiwano nowego wiersza
 D:\Informatyka_przemysłowa_sem.6\GK\Projekt\ProjektGK\ProjektGK\Main.cpp(11,69): warning C4244: "argument": konwersja z "T" do "float", możliwa utrata danych
           with
           [
               T=unsigned int
           ]
   Trwa generowanie kodu
-  6 of 21 functions (28.6%) were compiled, the rest were copied from previous compilation.
-    3 functions were new in current compilation
+  1 of 46 functions ( 2.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Zakończono generowanie kodu
   ProjektGK.vcxproj -> D:\Informatyka_przemysłowa_sem.6\GK\Projekt\ProjektGK\x64\Release\ProjektGK.exe
