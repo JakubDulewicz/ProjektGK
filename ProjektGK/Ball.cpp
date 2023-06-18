@@ -74,14 +74,17 @@ void Ball::checkCollisionWithBlocks()
         {
             velocity.y = -velocity.y;
             block.setDestroyed(true);
+            block.spawnCollectable();
         }
     }
-    blocks->erase(std::remove_if(blocks->begin(), blocks->end(), [](const Block& block) {
-        return block.getDestoryed();
-        }), blocks->end());
 }
 
 float Ball::getRadius() const
 {
     return shape.getRadius();
+}
+
+std::vector<Block>* Ball::getBlocks()
+{
+    return this->blocks;
 }

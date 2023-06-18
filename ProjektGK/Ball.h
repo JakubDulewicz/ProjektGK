@@ -26,4 +26,5 @@ public:
     void checkCollisionWithBlocks();
 
     float getRadius() const;
+    std::vector<Block>* getBlocks();
 };

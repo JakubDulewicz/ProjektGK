@@ -1,2 +1,8 @@
 ﻿  Main.cpp
+D:\Informatyka_przemysłowa_sem.6\GK\Projekt\ProjektGK\ProjektGK\Ball.h(3,10): warning C4067: nieoczekiwane tokeny występujące po dyrektywie preprocesora - oczekiwano nowego wiersza
+D:\Informatyka_przemysłowa_sem.6\GK\Projekt\ProjektGK\ProjektGK\Main.cpp(11,69): warning C4244: "argument": konwersja z "T" do "float", możliwa utrata danych
+          with
+          [
+              T=unsigned int
+          ]
   ProjektGK.vcxproj -> D:\Informatyka_przemysłowa_sem.6\GK\Projekt\ProjektGK\x64\Debug\ProjektGK.exe

@@ -10,6 +10,8 @@ int main()
     Platform platform(&window,150.0f, 20.0f, 0.1f);
     platform.setPosition(window.getSize().x / 2.0f, window.getSize().y);
 
+
+    // Utwórz bloki
     std::vector<Block> blocks;
     float blockWidth = 60.0f;
     float blockHeight = 20.0f;
@@ -25,7 +27,8 @@ int main()
             blocks.emplace_back(posX, posY, blockWidth, blockHeight);
         }
     }
-
+    //Utwórz kontener na Usuniête bloki;
+    std::vector<Block> deletedBlocks;
 
     //Utwórz pi³kê 
     Ball ball(10.0f, 0.16f,&window,&platform,&blocks);
@@ -51,23 +54,50 @@ int main()
         {
             platform.moveRight();
         }
-
-        ball.update();
-        // Wyczyœæ ekran
         window.clear(sf::Color::Black);
 
-        // Wyœwietl planszê
 
-        // Narysuj platformê
-        platform.draw();
-        ball.draw();
-        for (auto& block : blocks)
+        for (auto it = blocks.begin(); it != blocks.end();)
         {
-            block.draw(window);
+            it->draw(window);
+            if (it->getDestoryed())
+            {
+                deletedBlocks.push_back(*it);
+                it = blocks.erase(it);
+            }
+            else
+            {
+                ++it;
+            }
         }
 
-        // Zakoñcz rysowanie
+
+
+
+        ball.update();
+        if (deletedBlocks.size() > 0)
+        {
+            for (int i = 0; i < deletedBlocks.size(); i++)
+            {
+                deletedBlocks.at(i).getCollectable()->update();
+            }
+        }
+        platform.draw();
+        ball.draw();
+        if (deletedBlocks.size() > 0)
+        {
+            for (int i = 0; i < deletedBlocks.size(); i++)
+            {
+                deletedBlocks.at(i).getCollectable()->draw(window);
+               // ball.getBlocks()->at(i).getCollectable()->draw(window);
+            }
+        }
+
+
+        //Tu jest problem tracimy dostêp do collectable bo wywalamy block z wektora wiêc blok przestaje istnieæ a collectable dalej musi istniec
+        
         window.display();
+       
     }
 
     return 0;
