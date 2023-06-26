@@ -31,6 +31,11 @@ void Platform::setPosition(float x, float y)
 {
 	shape.setPosition(x, y - shape.getSize().y);
 }
+void Platform::checkCollisionWithCollectable()
+{
+	sf::FloatRect rectangleBound = shape.getGlobalBounds();
+	
+}
 void Platform::draw()
 {
 	window->draw(shape);

@@ -27,7 +27,7 @@ int main()
             blocks.emplace_back(posX, posY, blockWidth, blockHeight);
         }
     }
-    //Utwórz kontener na Usuniête bloki;
+    //Utwórz kontener na usuniête bloki;
     std::vector<Block> deletedBlocks;
 
     //Utwórz pi³kê 
@@ -71,33 +71,33 @@ int main()
             }
         }
 
-
-
-
         ball.update();
         if (deletedBlocks.size() > 0)
         {
             for (int i = 0; i < deletedBlocks.size(); i++)
             {
-                deletedBlocks.at(i).getCollectable()->update();
+                if (deletedBlocks.at(i).getCollectable() != nullptr)
+                {
+                    deletedBlocks.at(i).getCollectable()->update();
+                }
             }
         }
         platform.draw();
         ball.draw();
         if (deletedBlocks.size() > 0)
         {
+
             for (int i = 0; i < deletedBlocks.size(); i++)
             {
-                deletedBlocks.at(i).getCollectable()->draw(window);
-               // ball.getBlocks()->at(i).getCollectable()->draw(window);
+                if (deletedBlocks.at(i).getCollectable() != nullptr)
+                {
+                    deletedBlocks.at(i).getCollectable()->draw(window);
+                }
+              
             }
         }
-
-
-        //Tu jest problem tracimy dostêp do collectable bo wywalamy block z wektora wiêc blok przestaje istnieæ a collectable dalej musi istniec
         
-        window.display();
-       
+        window.display();  
     }
 
     return 0;

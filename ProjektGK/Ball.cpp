@@ -79,6 +79,7 @@ void Ball::checkCollisionWithBlocks()
     }
 }
 
+
 float Ball::getRadius() const
 {
     return shape.getRadius();

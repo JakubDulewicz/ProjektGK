@@ -10,6 +10,7 @@ public:
 	void moveLeft();
 	void moveRight();
 	void setPosition(float x, float y);
+	void checkCollisionWithCollectable();
 	void draw();
 
 	float getHeight();

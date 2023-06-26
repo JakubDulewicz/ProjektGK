@@ -1,4 +1,5 @@
 #include "block.h"
+#include "Collectable.h"
 #include <random>
 Block::Block(float x, float y, float width, float height)
 {
@@ -41,7 +42,7 @@ void Block::spawnCollectable()
 
     int random = dist(gen);
 
-    if (random < 100)
+    if (random < 50)
     {
         float x = shape.getPosition().x + shape.getSize().x / 2.0f;
         float y = shape.getPosition().y + shape.getSize().y / 2.0f;
@@ -50,6 +51,10 @@ void Block::spawnCollectable()
         float collectableVelocityY = 0.1f;
         collectable = new Collectable(collectableRadius, x, y, collectableVelocityY);
         
+    }
+    else
+    {
+        collectable = nullptr;
     }
 }
 

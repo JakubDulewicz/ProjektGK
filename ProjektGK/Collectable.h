@@ -11,4 +11,5 @@ public:
     void update();
     void draw(sf::RenderWindow& window);
     sf::FloatRect getBounds() const;
+
 };
