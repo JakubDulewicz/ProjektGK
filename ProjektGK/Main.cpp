@@ -1,6 +1,29 @@
 #include "SFML/Graphics.hpp"
 #include "Platform.h"
 #include "Ball.h"
+
+void spawnCollectableFromBlockVectorAddTItToCollectableVectorAndEraseBlock(std::vector<Block>& blocks, std::vector<Collectable>& collectables)
+{
+    for (int i = 0; i < blocks.size(); i++)
+    {
+        if (blocks.at(i).getDestoryed() == true)
+        {
+           Collectable* collectable = blocks.at(i).spawnCollectable();
+           if (collectable != nullptr)
+           {
+               collectables.push_back(*collectable);
+               delete collectable;
+           }
+           blocks.erase(blocks.begin()+i);
+        }
+        else
+        {
+            i++;
+        }
+    }
+}
+
+
 int main()
 {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
@@ -27,11 +50,11 @@ int main()
             blocks.emplace_back(posX, posY, blockWidth, blockHeight);
         }
     }
-    //Utwórz kontener na usuniête bloki;
-    std::vector<Block> deletedBlocks;
+    //Utwórz kontener na obiekty collectable;
+    std::vector<Collectable> collectables;
 
     //Utwórz pi³kê 
-    Ball ball(10.0f, 0.16f,&window,&platform,&blocks);
+    Ball ball(10.0f, 0.16f);
     ball.setPosition(window.getSize().x / 2.0f, window.getSize().y - platform.getHeight() * 1.5f - ball.getRadius());
 
     // G³ówna pêtla gry
@@ -55,52 +78,29 @@ int main()
             platform.moveRight();
         }
         window.clear(sf::Color::Black);
-
-
-        for (auto it = blocks.begin(); it != blocks.end();)
+        spawnCollectableFromBlockVectorAddTItToCollectableVectorAndEraseBlock(blocks, collectables);
+        //update blocks
+        for (int i = 0; i < blocks.size(); i++)
         {
-            it->draw(window);
-            if (it->getDestoryed())
-            {
-                deletedBlocks.push_back(*it);
-                it = blocks.erase(it);
-            }
-            else
-            {
-                ++it;
-            }
+            blocks.at(i).draw(window);
         }
-
-        ball.update();
-        if (deletedBlocks.size() > 0)
+        //update collectable
+        for (int i = 0; i < collectables.size(); i++)
         {
-            for (int i = 0; i < deletedBlocks.size(); i++)
-            {
-                if (deletedBlocks.at(i).getCollectable() != nullptr)
-                {
-                    deletedBlocks.at(i).getCollectable()->update();
-                }
-            }
+            collectables.at(i).update();
         }
+        ball.update(window, platform, blocks);        
+      
         platform.draw();
-        ball.draw();
-        if (deletedBlocks.size() > 0)
+        ball.draw(window);
+      
+        for (int i = 0; i < collectables.size(); i++)
         {
-
-            for (int i = 0; i < deletedBlocks.size(); i++)
-            {
-                if (deletedBlocks.at(i).getCollectable() != nullptr)
-                {
-                    deletedBlocks.at(i).getCollectable()->draw(window);
-                }
-              
-            }
+            collectables.at(i).draw(window);
         }
-        
+       
         window.display();  
     }
 
     return 0;
 }
-
-   

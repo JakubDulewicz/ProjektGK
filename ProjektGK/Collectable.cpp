@@ -14,6 +14,7 @@ void Collectable::update()
     shape.move(velocity);
 }
 
+
 void Collectable::draw(sf::RenderWindow& window)
 {
     window.draw(shape);

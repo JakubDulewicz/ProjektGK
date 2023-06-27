@@ -4,14 +4,11 @@
 #include <random>
 
 
-Ball::Ball(float radius, float speed, sf::RenderWindow* window, Platform* platform, std::vector<Block>* blocks)
+Ball::Ball(float radius, float speed)
 {
     this->radius = radius;
     this->speed = speed;
-    this->window = window;
-    this->platform = platform;
-    this->blocks = blocks;
-
+  
     shape.setRadius(radius);
     shape.setFillColor(sf::Color::White);
 
@@ -21,17 +18,18 @@ Ball::Ball(float radius, float speed, sf::RenderWindow* window, Platform* platfo
     velocity = sf::Vector2f(dis(gen), -speed);
 }
 
-void Ball::update()
+void Ball::update(sf::RenderWindow& window,Platform& platform, std::vector<Block>& blocks)
 {
     shape.move(velocity);
-    checkCollisionWithWindow();
-    checkCollisionWithPlatform();
-    checkCollisionWithBlocks();
+    checkCollisionWithWindow(window);
+    checkCollisionWithPlatform(platform);
+    checkCollisionWithBlocks(blocks);
+
 }
 
-void Ball::draw()
+void Ball::draw(sf::RenderWindow& window)
 {
-    window->draw(shape);
+    window.draw(shape);
 }
 
 void Ball::setPosition(float x, float y)
@@ -39,10 +37,10 @@ void Ball::setPosition(float x, float y)
     shape.setPosition(x, y);
 }
 
-void Ball::checkCollisionWithWindow()
+void Ball::checkCollisionWithWindow(sf::RenderWindow& window)
 {
     sf::FloatRect ballBounds = shape.getGlobalBounds();
-    sf::Vector2u windowSize = window->getSize();
+    sf::Vector2u windowSize = window.getSize();
 
     if (ballBounds.left <= 0 || ballBounds.left + ballBounds.width >= windowSize.x)
     {
@@ -55,10 +53,10 @@ void Ball::checkCollisionWithWindow()
     }
 }
 
-void Ball::checkCollisionWithPlatform()
+void Ball::checkCollisionWithPlatform(Platform& platform)
 {
     sf::FloatRect ballBounds = shape.getGlobalBounds();
-    sf::FloatRect platformBounds = platform->getShape().getGlobalBounds();
+    sf::FloatRect platformBounds = platform.getShape().getGlobalBounds();//platform->getShape().getGlobalBounds();
  
     if (ballBounds.intersects(platformBounds))
     {
@@ -66,15 +64,14 @@ void Ball::checkCollisionWithPlatform()
     }
 }
 
-void Ball::checkCollisionWithBlocks()
+void Ball::checkCollisionWithBlocks(std::vector<Block>& blocks)
 {
-    for (auto& block : *blocks)
+    for (auto& block : blocks)
     {
         if (!block.getDestoryed() && shape.getGlobalBounds().intersects(block.getBounds()))
         {
             velocity.y = -velocity.y;
             block.setDestroyed(true);
-            block.spawnCollectable();
         }
     }
 }
@@ -83,9 +80,4 @@ void Ball::checkCollisionWithBlocks()
 float Ball::getRadius() const
 {
     return shape.getRadius();
-}
-
-std::vector<Block>* Ball::getBlocks()
-{
-    return this->blocks;
 }

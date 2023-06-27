@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Platform.h";
+#include "Platform.h"
 #include "Block.h"
 #include <vector>
 class Ball
@@ -13,18 +13,14 @@ private:
     float speed;
     float radius;
 
-    sf::RenderWindow* window;
-    Platform* platform;
-    std::vector<Block>* blocks;
 public:
-    Ball(float radius, float speed, sf::RenderWindow* window, Platform* platform, std::vector<Block>* blocks);
-    void update();
-    void draw();
+    Ball(float radius, float speed);
+    void update(sf::RenderWindow& window, Platform& platform, std::vector<Block>& blocks);
+    void draw(sf::RenderWindow& window);
     void setPosition(float x, float y);
-    void checkCollisionWithWindow();
-    void checkCollisionWithPlatform();
-    void checkCollisionWithBlocks();
+    void checkCollisionWithWindow(sf::RenderWindow& window);
+    void checkCollisionWithPlatform(Platform& platform);
+    void checkCollisionWithBlocks(std::vector<Block>& blocks);
 
     float getRadius() const;
-    std::vector<Block>* getBlocks();
 };
