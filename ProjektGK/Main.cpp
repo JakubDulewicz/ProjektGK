@@ -1,38 +1,18 @@
 #include "SFML/Graphics.hpp"
 #include "Platform.h"
 #include "Ball.h"
-
-void spawnCollectableFromBlockVectorAddTItToCollectableVectorAndEraseBlock(std::vector<Block>& blocks, std::vector<Collectable>& collectables)
-{
-    for (int i = 0; i < blocks.size(); i++)
-    {
-        if (blocks.at(i).getDestoryed() == true)
-        {
-           Collectable* collectable = blocks.at(i).spawnCollectable();
-           if (collectable != nullptr)
-           {
-               collectables.push_back(*collectable);
-               delete collectable;
-           }
-           blocks.erase(blocks.begin()+i);
-        }
-        else
-        {
-            i++;
-        }
-    }
-}
+#include "Game.h"
 
 
 int main()
 {
-    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-    sf::RenderWindow window(sf::VideoMode(desktop.width - 800, desktop.height - 200), "Arkanoid");
+    Game game;
+    Platform platform(&game.getWindow(), 150.0f, 20.0f, 0.1f);
+    Ball ball(10.0f, 0.16f);
+    std::vector<Collectable> collectables;
 
-    // Utwórz platformê
-    Platform platform(&window,150.0f, 20.0f, 0.1f);
-    platform.setPosition(window.getSize().x / 2.0f, window.getSize().y);
-
+    platform.setPosition(game.getWindow().getSize().x / 2.0f, game.getWindow().getSize().y);
+    ball.setPosition(game.getWindow().getSize().x / 2.0f, game.getWindow().getSize().y - platform.getHeight() * 1.5f - ball.getRadius());
 
     // Utwórz bloki
     std::vector<Block> blocks;
@@ -50,56 +30,15 @@ int main()
             blocks.emplace_back(posX, posY, blockWidth, blockHeight);
         }
     }
-    //Utwórz kontener na obiekty collectable;
-    std::vector<Collectable> collectables;
 
-    //Utwórz pi³kê 
-    Ball ball(10.0f, 0.16f);
-    ball.setPosition(window.getSize().x / 2.0f, window.getSize().y - platform.getHeight() * 1.5f - ball.getRadius());
-
-    // G³ówna pêtla gry
-    while (window.isOpen())
+    while (game.getWindow().isOpen())
     {
-        // SprawdŸ zdarzenia
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        // Poruszanie platform¹
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        {
-            platform.moveLeft();
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        {
-            platform.moveRight();
-        }
-        window.clear(sf::Color::Black);
-        spawnCollectableFromBlockVectorAddTItToCollectableVectorAndEraseBlock(blocks, collectables);
-        //update blocks
-        for (int i = 0; i < blocks.size(); i++)
-        {
-            blocks.at(i).draw(window);
-        }
-        //update collectable
-        for (int i = 0; i < collectables.size(); i++)
-        {
-            collectables.at(i).update();
-        }
-        ball.update(window, platform, blocks);        
-      
-        platform.draw();
-        ball.draw(window);
-      
-        for (int i = 0; i < collectables.size(); i++)
-        {
-            collectables.at(i).draw(window);
-        }
-       
-        window.display();  
+        game.processEvent(platform);
+        game.updateAll(ball, platform, blocks, collectables);
+        game.spawnCollectableFromBlockVectorAddTItToCollectableVectorAndEraseBlock(blocks, collectables);
+        game.getWindow().clear(sf::Color::Black);
+        game.drawALL(ball, platform, blocks, collectables);
+        game.getWindow().display();
     }
 
     return 0;

@@ -1,5 +1,5 @@
 ﻿  Main.cpp
-D:\Informatyka_przemysłowa_sem.6\GK\Projekt\ProjektGK\ProjektGK\Main.cpp(34,69): warning C4244: "argument": konwersja z "T" do "float", możliwa utrata danych
+D:\Informatyka_przemysłowa_sem.6\GK\Projekt\ProjektGK\ProjektGK\Main.cpp(13,89): warning C4244: "argument": konwersja z "T" do "float", możliwa utrata danych
           with
           [
               T=unsigned int
