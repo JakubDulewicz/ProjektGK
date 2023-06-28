@@ -7,8 +7,8 @@ public:
 	Platform(sf::RenderWindow* window, float width, float height, float speed);
 	~Platform();
 
-	void moveLeft();
-	void moveRight();
+	void moveLeft(sf::Time& deltaTime);
+	void moveRight(sf::Time& deltaTime);
 	void setPosition(float x, float y);
 	void checkCollisionWithCollectable();
 	void draw();

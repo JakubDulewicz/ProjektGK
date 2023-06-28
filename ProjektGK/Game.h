@@ -19,10 +19,14 @@ public:
 	void drawCollectable(std::vector<Collectable>& collectables);
 
 	sf::RenderWindow& getWindow();
+	sf::Clock& getClock();
+	sf::Time& getDeltaTime();
 	~Game();
 
 private:
 	sf::VideoMode desktop;
 	sf::RenderWindow window;
+	sf::Time deltaTime;
+	sf::Clock clock;
 };
 

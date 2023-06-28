@@ -33,6 +33,8 @@ int main()
 
     while (game.getWindow().isOpen())
     {
+
+        game.getClock().restart();
         game.processEvent(platform);
         game.updateAll(ball, platform, blocks, collectables);
         game.spawnCollectableFromBlockVectorAddTItToCollectableVectorAndEraseBlock(blocks, collectables);

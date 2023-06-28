@@ -18,9 +18,9 @@ Ball::Ball(float radius, float speed)
     velocity = sf::Vector2f(dis(gen), -speed);
 }
 
-void Ball::update(sf::RenderWindow& window,Platform& platform, std::vector<Block>& blocks)
+void Ball::update(sf::RenderWindow& window,Platform& platform, std::vector<Block>& blocks, sf::Time& deltaTime)
 {
-    shape.move(velocity);
+    shape.move(velocity * deltaTime.asSeconds());
     checkCollisionWithWindow(window);
     checkCollisionWithPlatform(platform);
     checkCollisionWithBlocks(blocks);

@@ -3,6 +3,7 @@ Game::Game()
 {
     this->desktop = sf::VideoMode::getDesktopMode();
     window.create(sf::VideoMode(desktop.width - 800, desktop.height - 200), "Arkanoid");
+    this->deltaTime = clock.restart();
 }
 
 void Game::spawnCollectableFromBlockVectorAddTItToCollectableVectorAndEraseBlock(std::vector<Block>& blocks, std::vector<Collectable>& collectables)
@@ -36,17 +37,17 @@ void Game::processEvent(Platform& platform)
     // Poruszanie platform¹
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        platform.moveLeft();
+        platform.moveLeft(deltaTime);
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        platform.moveRight();
+        platform.moveRight(deltaTime);
     }
 }
 
 void Game::updateAll(Ball& ball, Platform& platform, std::vector<Block>& blocks,std::vector<Collectable>& collectables)
 {
-    ball.update(window, platform, blocks);
+    ball.update(window, platform, blocks,deltaTime);
     updateCollectables(collectables);
 }
 
@@ -85,6 +86,16 @@ void Game::drawBlocks(std::vector<Block>& blocks)
 sf::RenderWindow& Game::getWindow()
 {
     return window;
+}
+
+sf::Clock& Game::getClock()
+{
+    return clock;
+}
+
+sf::Time& Game::getDeltaTime()
+{
+    return deltaTime;
 }
 
 Game::~Game()

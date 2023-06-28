@@ -14,15 +14,15 @@ Platform::Platform(sf::RenderWindow* window, float width, float height, float sp
 }
 Platform::~Platform(){}
 
-void Platform::moveLeft()
+void Platform::moveLeft(sf::Time& deltaTime)
 {
-	shape.move(-speed, 0.0f);
+	shape.move(-speed * deltaTime.asSeconds(), 0.0f);
 	if (shape.getPosition().x < 0)
 		shape.setPosition(0, shape.getPosition().y);
 }
-void Platform::moveRight()
+void Platform::moveRight(sf::Time& deltaTime)
 {
-	shape.move(speed, 0.0f);
+	shape.move(speed * deltaTime.asSeconds(), 0.0f);
 	if (shape.getPosition().x + shape.getSize().x > window->getSize().x)
 		shape.setPosition(window->getSize().x - shape.getSize().x, shape.getPosition().y);
 	
