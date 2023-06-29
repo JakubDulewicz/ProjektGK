@@ -36,6 +36,19 @@ void Platform::checkCollisionWithCollectable()
 	sf::FloatRect rectangleBound = shape.getGlobalBounds();
 	
 }
+void Platform::IncreasePlatformLenghtForPeriodOfTime(sf::Time durationTime)
+{
+
+	if (powerUpTimer.getElapsedTime() < durationTime)
+	{
+		shape.setSize(sf::Vector2f((width + width), shape.getSize().y));
+	}
+	else
+	{
+		shape.setSize(sf::Vector2f((width), shape.getSize().y));
+	}
+
+}
 void Platform::draw()
 {
 	window->draw(shape);
@@ -59,4 +72,9 @@ float Platform::getSpeed()
 sf::RectangleShape Platform::getShape()
 {
 	return shape;
+}
+
+sf::Clock& Platform::getClock()
+{
+	return powerUpTimer;
 }

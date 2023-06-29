@@ -48,7 +48,18 @@ void Game::processEvent(Platform& platform)
 void Game::updateAll(Ball& ball, Platform& platform, std::vector<Block>& blocks,std::vector<Collectable>& collectables)
 {
     ball.update(window, platform, blocks,deltaTime);
+    
+    for (int i = 0; i < collectables.size(); i++)
+    {
+        collectables.at(i).checkCollisionWithPlatform(platform);
+        if (collectables.at(i).getIsCollected())
+        {
+            platform.IncreasePlatformLenghtForPeriodOfTime(sf::seconds(20));
+        }
+    
+    }
     updateCollectables(collectables);
+
 }
 
 void Game::drawALL(Ball& ball, Platform& platform, std::vector<Block>& blocks, std::vector<Collectable>& collectables)

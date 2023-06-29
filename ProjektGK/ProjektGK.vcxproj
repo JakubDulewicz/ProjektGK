@@ -153,6 +153,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Platform.h" />
+    <ClInclude Include="PowerUp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

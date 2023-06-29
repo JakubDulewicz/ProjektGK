@@ -7,8 +7,8 @@
 int main()
 {
     Game game;
-    Platform platform(&game.getWindow(), 150.0f, 20.0f, 0.1f);
-    Ball ball(10.0f, 0.16f);
+    Platform platform(&game.getWindow(), 150.0f, 20.0f, 0.5f);
+    Ball ball(10.0f, 0.4f);
     std::vector<Collectable> collectables;
 
     platform.setPosition(game.getWindow().getSize().x / 2.0f, game.getWindow().getSize().y);
